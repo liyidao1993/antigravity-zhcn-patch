@@ -61,6 +61,10 @@ cd antigravity-zhcn-patch
 2. 双击运行 `unpatch.bat`
 3. 重新启动 Antigravity
 
+## 🤖 技能说明翻译 (Skill Translator)
+
+如果你需要翻译 Antigravity 自带的 38 个技能说明，请使用随附的 `skill-translator` 文件夹中的工具。你也可以直接在对话中让 AI 助手代为使用该工具来翻译未来新增的技能说明。
+
 ## 🔧 汉化范围
 
 ### ✅ 完全覆盖（Electron 外壳）
