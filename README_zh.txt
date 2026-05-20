@@ -9,9 +9,12 @@ Antigravity 中文汉化包 (一键补丁)
 因为本补丁需要解包和重新打包核心文件，所以你的电脑里必须已经安装了 Node.js 环境。
 如果你还没有安装 Node.js，请先去官网 (https://nodejs.org) 下载并安装（一直点下一步即可）。
 
+【适用系统】
+适用于 Windows，苹果 (macOS) 用户请自测。
+
 【使用方法】
 1. 找到你电脑里 Antigravity 的安装根目录（通常里面有一个 resources 文件夹）。
-2. 将本压缩包内的所有文件（patch.bat、patch-files 文件夹等）解压并复制到那个根目录中。
+2. 将本压缩包内下载的所有文件（patch.bat、patch-files 文件夹等）解压并**必须全部存放在该根目录中**。
 3. 完全关闭正在运行的 Antigravity 软件。
 4. 双击运行刚才复制进去的 `patch.bat`。
 5. 耐心等待黑色的命令提示符窗口跑完代码，直到看到 "Patch applied successfully!" 的提示。

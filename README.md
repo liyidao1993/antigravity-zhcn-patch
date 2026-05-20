@@ -38,9 +38,16 @@ antigravity-zhcn-patch/
 
 ### 安装汉化补丁
 
+**【适用系统】**
+适用于 Windows，苹果 (macOS) 用户请自测。
+
+**【重要提示】**
+解压缩下载的补丁包后，**必须将所有文件存放在 Antigravity 的安装根目录中**。
+
 1. **关闭 Antigravity**（包括系统托盘）
-2. 双击运行 `patch.bat`
-3. 等待提示"汉化补丁安装成功"
+2. 将本压缩包内下载的所有文件解压并存放至 Antigravity 安装根目录（包含 resources 文件夹的目录）
+3. 双击运行 `patch.bat`
+4. 等待提示"汉化补丁安装成功"
 4. 重新启动 Antigravity
 
 ### 还原英文界面
