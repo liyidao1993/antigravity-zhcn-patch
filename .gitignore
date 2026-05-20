@@ -1,0 +1,7 @@
+# Backups and temporary files
+backup/
+_temp_extract/
+*.zip
+
+# Ignore skill translator backups
+skill-translator/backup/
