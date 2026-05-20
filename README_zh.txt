@@ -12,13 +12,19 @@ Antigravity 中文汉化包 (一键补丁)
 【适用系统】
 适用于 Windows，苹果 (macOS) 用户请自测。
 
-【使用方法】
+【使用方法一：下载压缩包（推荐）】
 1. 找到你电脑里 Antigravity 的安装根目录（通常里面有一个 resources 文件夹）。
 2. 将本压缩包内下载的所有文件（patch.bat、patch-files 文件夹等）解压并**必须全部存放在该根目录中**。
 3. 完全关闭正在运行的 Antigravity 软件。
 4. 双击运行刚才复制进去的 `patch.bat`。
 5. 耐心等待黑色的命令提示符窗口跑完代码，直到看到 "Patch applied successfully!" 的提示。
 6. 关掉黑框，重新打开 Antigravity，享受全中文界面吧！
+
+【使用方法二：Git 克隆安装（适合开发者）】
+如果你熟悉 Git，也可以直接将代码克隆到 Antigravity 安装根目录：
+1. 打开命令行，进入你的 Antigravity 安装根目录。
+2. 运行 `git clone https://github.com/liyidao1993/antigravity-zhcn-patch.git`。
+3. 进入 `antigravity-zhcn-patch` 文件夹，双击运行 `patch.bat`。
 
 【如何还原】
 如果你想恢复到原本的全英文状态：
