@@ -49,7 +49,6 @@ const path_1 = __importDefault(require("path"));
 const fs = __importStar(require("fs"));
 const paths_1 = require("./paths");
 const loadingOverlay_1 = require("./loadingOverlay");
-const zhcn_1 = require("./zhcn");
 exports.showQuitConfirmation = false;
 function setShowQuitConfirmation(value) {
     exports.showQuitConfirmation = value;
@@ -111,6 +110,8 @@ function createWindow(url) {
     const win = new electron_1.BrowserWindow({
         width: 1400,
         height: 900,
+        minWidth: 500,
+        minHeight: 400,
         title: electron_1.app.getName(),
         icon: path_1.default.join(__dirname, '..', 'icon.png'),
         titleBarStyle: 'hidden',
@@ -127,7 +128,16 @@ function createWindow(url) {
             nodeIntegration: false,
             contextIsolation: true,
             preload: path_1.default.join(__dirname, 'preload.js'),
+            devTools: !electron_1.app.isPackaged,
         },
+    });
+    // Prevent the menu dropdown from being very wide due to long page titles
+    win.on('page-title-updated', (event, title) => {
+        const maxLength = 25;
+        if (title.length > maxLength) {
+            event.preventDefault();
+            win.setTitle(title.substring(0, maxLength) + '...');
+        }
     });
     win.webContents.setWindowOpenHandler((details) => {
         void electron_1.shell.openExternal(details.url);
@@ -144,10 +154,19 @@ function createWindow(url) {
         },
     });
     void win.loadURL(url);
-    // 中文汉化：在 DOM 加载完成后注入翻译脚本
+    win.webContents.openDevTools();
+
     win.webContents.on('dom-ready', () => {
-        win.webContents.executeJavaScript((0, zhcn_1.getLocalizationScript)()).catch(() => {});
+        try {
+            const zhcn = require('./zhcn');
+            win.webContents.executeJavaScript(zhcn.getLocalizationScript()).catch(err => {
+                console.error('Failed to execute zhcn.js', err);
+            });
+        } catch (err) {
+            console.error('Failed to load zhcn.js', err);
+        }
     });
+
     return win;
 }
 /**

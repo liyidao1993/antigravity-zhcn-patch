@@ -64,7 +64,7 @@ if (!gotTheLock) {
 let storageManager;
 let settingsService;
 let hasStartedMainApplication = false;
-let isQuitting = false;
+let is退出ting = false;
 // ---------------------------------------------------------------------------
 // Config
 // ---------------------------------------------------------------------------
@@ -103,6 +103,13 @@ function handleDeepLink(url) {
         pendingDeepLink = url;
     }
 }
+const PROTOCOL = electron_1.app
+    .getName()
+    .toLowerCase()
+    .replace(/\s+-\s+/g, '-');
+if (!electron_1.app.isDefaultProtocolClient(PROTOCOL)) {
+    electron_1.app.setAsDefaultProtocolClient(PROTOCOL);
+}
 electron_1.app.on('second-instance', (event, commandLine) => {
     const wins = electron_1.BrowserWindow.getAllWindows();
     if (wins.length > 0) {
@@ -113,17 +120,12 @@ electron_1.app.on('second-instance', (event, commandLine) => {
         wins[0].focus();
         electron_1.app.focus({ steal: true });
     }
-    const url = commandLine.find((arg) => arg.startsWith('antigravity://'));
+    const url = commandLine.find((arg) => arg.startsWith(`${PROTOCOL}://`));
     if (url) {
         handleDeepLink(url);
     }
 });
 (0, customScheme_1.registerCustomSchemes)();
-// Register as default protocol client for deep linking
-const PROTOCOL = 'antigravity';
-if (!electron_1.app.isDefaultProtocolClient(PROTOCOL)) {
-    electron_1.app.setAsDefaultProtocolClient(PROTOCOL);
-}
 electron_1.app.on('open-url', (event, url) => {
     event.preventDefault();
     handleDeepLink(url);
@@ -143,7 +145,7 @@ electron_1.app
     storageManager = new storage_1.StorageManager(storagePath, settingsService_1.DEFAULTS);
     settingsService = new settingsService_1.SettingsService(storageManager);
     // Handle deep link URL from command line arguments (All platforms)
-    const deepLinkFromArg = process.argv.find((arg) => arg.startsWith('antigravity://'));
+    const deepLinkFromArg = process.argv.find((arg) => arg.startsWith(`${PROTOCOL}://`));
     if (deepLinkFromArg) {
         console.log('Launched with deep link:', deepLinkFromArg);
         pendingDeepLink = deepLinkFromArg;
@@ -160,7 +162,6 @@ electron_1.app
     // Set About panel options with LS CL
     const cl = await (0, languageServer_1.getLsCL)();
     electron_1.app.setAboutPanelOptions({
-        applicationName: 'Antigravity',
         applicationVersion: electron_1.app.getVersion(),
         version: cl || undefined,
     });
@@ -181,7 +182,7 @@ electron_1.app
             console.error('ERROR:', msg);
         }
         else {
-            await electron_1.dialog.showErrorBox('未找到可执行文件', msg);
+            await electron_1.dialog.showErrorBox('Binary not found', msg);
         }
         electron_1.app.quit();
         return;
@@ -213,7 +214,7 @@ electron_1.app
             console.error('Startup failed:', msg);
         }
         else {
-            await electron_1.dialog.showErrorBox('启动失败', msg);
+            await electron_1.dialog.showErrorBox('Startup failed', msg);
         }
         electron_1.app.quit();
         return;
@@ -248,7 +249,7 @@ electron_1.app
         if (electron_1.app.dock) {
             const dockMenu = electron_1.Menu.buildFromTemplate([
                 {
-                    label: '新建窗口',
+                    label: 'New Window',
                     click: () => (0, utils_1.createWindow)(url),
                 },
             ]);
@@ -257,16 +258,16 @@ electron_1.app
         (0, tray_1.createTray)([
             {
                 id: 'running-agents',
-                label: '没有正在运行的 Agent',
+                label: '无运行中的 Agent',
                 enabled: false,
             },
             { type: 'separator' },
             {
-                label: `打开 ${electron_1.app.getName()}`,
+                label: `Open ${electron_1.app.getName()}`,
                 click: () => (0, utils_1.showOrCreateWindow)((0, languageServer_1.getLsPort)()),
             },
             {
-                label: '退出',
+                label: 'Quit',
                 click: () => {
                     // Triggers 'before-quit' to run graceful cleanup without confirmation.
                     electron_1.app.quit();
@@ -334,12 +335,12 @@ electron_1.app.on('before-quit', async (event) => {
     const win = electron_1.BrowserWindow.getFocusedWindow() || electron_1.BrowserWindow.getAllWindows()[0];
     const options = {
         type: 'question',
-        buttons: ['取消', '退出'],
+        buttons: ['取消', 'Quit'],
         defaultId: 1,
         cancelId: 0,
-        title: '确认退出',
+        title: 'Confirm Quit',
         message: '确定要退出吗？',
-        detail: '可能仍有 Agent 或后台任务正在运行。',
+        detail: 'There may be agents or background tasks running.',
     };
     (0, utils_1.setShowQuitConfirmation)(false);
     if (win) {

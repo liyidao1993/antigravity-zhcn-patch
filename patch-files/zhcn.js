@@ -182,6 +182,19 @@ function getLocalizationScript() {
     'Timeline': '时间线',
     'Preview': '预览',
     'Console': '控制台',
+    
+    // ---- 新增：辅助窗格、Agent与审核 ----
+    'Overview': '概览',
+    'Subagents': '子 Agent',
+    'Background Tasks': '后台任务',
+    'Review Changes': '检查更改',
+    'Files Changed': '已更改文件',
+    'Task': '任务',
+    'Implementation Plan': '实施计划',
+    'Artifacts': '工件',
+    'Edit Conversation Title': '编辑对话标题',
+    'Stop Execution': '停止执行',
+    'Querying Antigravity Updates': '正在查询 Antigravity 更新',
 
     // ---- 通用短语 ----
     'Are you sure?': '确定吗？',
@@ -229,7 +242,17 @@ function getLocalizationScript() {
     'Get Started': '开始使用',
     'Getting Started': '开始使用',
     'Learn More': '了解更多',
-    'What\\'s New': '新功能',
+    "What's New": '新功能',
+    
+    // ---- 补充截图漏网之鱼 ----
+    "Plan": "计划",
+    "You can upgrade to a Google AI Ultra plan to receive higher rate limits.": "您可以升级到 Google AI Ultra 计划以获得更高的使用频率上限。",
+    "When toggled on, Antigravity will use your AI credits to fulfill model requests once you're out of model quota. Antigravity will always use your model quota first before using AI credits.": "启用后，当模型配额耗尽时，Antigravity 将使用您的 AI 额度来处理模型请求。Antigravity 始终会优先使用模型配额，然后再使用 AI 额度。",
+    "Within each group, models share a weekly limit and a 5-hour limit. Quota is consumed proportionally to the cost of the tokens. Thus, limits will last longer with shorter tasks or using more cost-effective models. The 5-hour limit smooths out aggregate demand to fairly distribute global capacity across all users, while your weekly limit is tied directly to your individual tier.": "在每个分组中，模型共享每周限额和 5 小时限额。配额消耗与 Token 成本成正比。因此，执行较短任务或使用高性价比模型时，限额维持更久。5 小时限额旨在平滑总需求以确保公平分配，而每周限额则与您的个人订阅等级挂钩。",
+    "Gemini Models": "Gemini 模型",
+    "Weekly Limit": "每周限额",
+    "Five Hour Limit": "5 小时限额",
+    "Show all": "显示全部",
 
     // ---- 通知 / 更新 ----
     'Notification': '通知',
@@ -586,6 +609,9 @@ function getLocalizationScript() {
     [/^The breakdown below shows token usage from customizations like skills, rules, and MCP\\.\\s+If the budget is exceeded, large customizations will be truncated automatically\\.\\s+(.+)% of the customization budget is available\\.$/, (m) => '下方的明细展示了技能、规则和 MCP 等自定义内容的 Token 使用情况。\\n如果超出预算，大型的自定义内容将会被自动截断。\\n有 ' + m[1] + '% 的自定义预算可用。'],
     [/^Send feedback as (.+)$/, (m) => '作为 ' + m[1] + ' 发送反馈'],
     [/^Save rule to always allow (.+) access to this path\?$/, (m) => '保存规则以始终允许对此路径的' + (m[1] === 'read' ? '读取' : m[1] === 'write' ? '写入' : m[1] === 'execute' ? '执行' : m[1]) + '访问权限？'],
+    [/^See all \((\d+)\)$/, (m) => '查看全部 (' + m[1] + ')'],
+    [/^Worked for (.+)$/, (m) => '已运行 ' + m[1].replace('m', '分钟').replace('s', '秒').replace('h', '小时')],
+    [/^You have used some of your weekly limit, it will fully refresh in (.+)\.$/, (m) => "您已使用了部分每周限额，将在 " + m[1].replace(/days?/g, "天").replace(/hours?/g, "小时").replace(/minutes?/g, "分钟") + " 后完全刷新。"],
   ];
 
   // ============================================================

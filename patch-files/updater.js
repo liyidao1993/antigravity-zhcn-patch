@@ -47,7 +47,7 @@ var MenuUpdateStep;
     MenuUpdateStep["CheckForUpdates"] = "检查更新";
     MenuUpdateStep["CheckingForUpdates"] = "正在检查更新...";
     MenuUpdateStep["DownloadingUpdate"] = "正在下载更新...";
-    MenuUpdateStep["RestartToUpdate"] = "重启以完成更新";
+    MenuUpdateStep["RestartToUpdate"] = "重启以更新";
 })(MenuUpdateStep || (exports.MenuUpdateStep = MenuUpdateStep = {}));
 exports.updateActions = {
     [MenuUpdateStep.CheckForUpdates]: () => checkForUpdates(true),
@@ -132,8 +132,8 @@ function initAutoUpdater(isHeadless) {
             const options = {
                 type: 'info',
                 title: '检查更新',
-                message: '当前已是最新版本',
-                buttons: ['确定'],
+                message: 'No updates available',
+                buttons: ['OK'],
             };
             if (win) {
                 electron_1.dialog.showMessageBox(win, options);
@@ -212,11 +212,20 @@ function headlessQuitAndInstall(downloadedFilePath) {
         let script = '';
         if (downloadedFilePath) {
             console.log(`[AutoUpdater] Will manually replace ${appPath} with ${downloadedFilePath}`);
-            script = `\r\n        while kill -0 ${currentPid} 2>/dev/null; do sleep 0.5; done\r\n        cp -f "${downloadedFilePath}" "${appPath}"\r\n        chmod +x "${appPath}"\r\n        "${appPath}" ${args.join(' ')}\r\n      `;
+            script = `
+        while kill -0 ${currentPid} 2>/dev/null; do sleep 0.5; done
+        cp -f "${downloadedFilePath}" "${appPath}"
+        chmod +x "${appPath}"
+        "${appPath}" ${args.join(' ')}
+      `;
         }
         else {
             console.warn('[AutoUpdater] No downloaded file path found, relaunching without update.');
-            script = `\r\n        while kill -0 ${currentPid} 2>/dev/null; do sleep 0.5; done\r\n        sleep 3\r\n        "${appPath}" ${args.join(' ')}\r\n      `;
+            script = `
+        while kill -0 ${currentPid} 2>/dev/null; do sleep 0.5; done
+        sleep 3
+        "${appPath}" ${args.join(' ')}
+      `;
         }
         const child = (0, child_process_1.spawn)('sh', ['-c', script], {
             detached: true,

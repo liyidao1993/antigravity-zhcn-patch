@@ -11,7 +11,62 @@ const electron_1 = require("electron");
  * @param backgroundColor - The background color of the loading view.
  */
 function getLoadingHtml(foregroundColor, backgroundColor) {
-    return `\r\n<!DOCTYPE html>\r\n<html>\r\n<head>\r\n<style>\r\n  body {\r\n    margin: 0;\r\n    padding: 0;\r\n    background: ${backgroundColor};\r\n    color: ${foregroundColor};\r\n    font-family: system-ui, -apple-system, sans-serif;\r\n    display: flex;\r\n    flex-direction: column;\r\n    align-items: center;\r\n    justify-content: center;\r\n    height: 100vh;\r\n    overflow: hidden;\r\n    -webkit-app-region: drag;\r\n    -webkit-user-select: none;\r\n  }\r\n  .loader {\r\n    display: flex;\r\n    gap: 8px;\r\n    margin-bottom: 16px;\r\n  }\r\n  .loader div {\r\n    width: 8px;\r\n    height: 8px;\r\n    border-radius: 50%;\r\n    background-color: ${foregroundColor};\r\n    opacity: 0.3;\r\n    animation: dot-pulse 1.5s infinite ease-in-out;\r\n  }\r\n  .loader div:nth-child(1) { animation-delay: 0s; }\r\n  .loader div:nth-child(2) { animation-delay: 0.3s; }\r\n  .loader div:nth-child(3) { animation-delay: 0.6s; }\r\n  .text {\r\n    font-size: 13px;\r\n    font-weight: 400;\r\n    letter-spacing: 0.03em;\r\n    opacity: 0.6;\r\n  }\r\n  @keyframes dot-pulse {\r\n    0%, 100% { opacity: 0.2; transform: scale(0.9); }\r\n    50% { opacity: 0.7; transform: scale(1.1); }\r\n  }\r\n</style>\r\n</head>\r\n<body>\r\n  <div class="loader">\r\n    <div></div><div></div><div></div>\r\n  </div>\r\n  <div class="text">正在加载 Antigravity</div>\r\n</body>\r\n</html>\r\n  `;
+    return `
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    background: ${backgroundColor};
+    color: ${foregroundColor};
+    font-family: system-ui, -apple-system, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    overflow: hidden;
+    -webkit-app-region: drag;
+    -webkit-user-select: none;
+  }
+  .loader {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+  .loader div {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: ${foregroundColor};
+    opacity: 0.3;
+    animation: dot-pulse 1.5s infinite ease-in-out;
+  }
+  .loader div:nth-child(1) { animation-delay: 0s; }
+  .loader div:nth-child(2) { animation-delay: 0.3s; }
+  .loader div:nth-child(3) { animation-delay: 0.6s; }
+  .text {
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.03em;
+    opacity: 0.6;
+  }
+  @keyframes dot-pulse {
+    0%, 100% { opacity: 0.2; transform: scale(0.9); }
+    50% { opacity: 0.7; transform: scale(1.1); }
+  }
+</style>
+</head>
+<body>
+  <div class="loader">
+    <div></div><div></div><div></div>
+  </div>
+  <div class="text">Loading Antigravity</div>
+</body>
+</html>
+  `;
 }
 /**
  * Attaches a temporary WebContentsView overlay that shows a loading animation.

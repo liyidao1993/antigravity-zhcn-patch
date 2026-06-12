@@ -68,8 +68,7 @@ function updateTrayAgentCount(count) {
     if (tray && contextMenu) {
         const countItem = contextMenu.items.find((item) => item.id === 'running-agents');
         if (countItem) {
-            countItem.label =
-                count > 0 ? `${count} 个 Agent 正在运行` : '没有正在运行的 Agent';
+            countItem.label = '运行中的 Agent: ' + count + ' 个';
             tray.setContextMenu(contextMenu);
         }
     }

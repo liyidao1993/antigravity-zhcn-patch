@@ -44,6 +44,7 @@ const main_1 = __importDefault(require("electron-log/main"));
 const fs = __importStar(require("fs/promises"));
 const customScheme_1 = require("./customScheme");
 const tray_1 = require("./tray");
+const constants_1 = require("./ideInstall/constants");
 /**
  * Registers all IPC handlers for the main process.
  */
@@ -52,7 +53,7 @@ function registerIpcHandlers(storageManager) {
     electron_1.ipcMain.handle('dialog:open-workspace', async () => {
         const result = await electron_1.dialog.showOpenDialog({
             properties: ['openDirectory', 'createDirectory'],
-            title: '打开工作区',
+            title: 'Open workspace',
         });
         if (result.canceled || result.filePaths.length === 0) {
             return undefined;
@@ -201,8 +202,21 @@ function registerIpcHandlers(storageManager) {
     });
     // Safe external shell launch
     electron_1.ipcMain.handle('shell:open-external', async (_event, url) => {
-        if (url.startsWith('https://') || url.startsWith('http://')) {
+        if (url.startsWith('https://') ||
+            url.startsWith('http://') ||
+            url.startsWith('antigravity-ide://')) {
             await electron_1.shell.openExternal(url);
+        }
+    });
+    // IDE installation check
+    electron_1.ipcMain.handle('ide:is-installed', async () => {
+        try {
+            // Check standard installation path (works even if the app has never been launched).
+            await fs.stat((0, constants_1.getIdeInstallPath)());
+            return true;
+        }
+        catch {
+            return false;
         }
     });
 }
