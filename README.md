@@ -1,6 +1,6 @@
 # Antigravity 2.0 中文汉化补丁
 
-适用版本：**Antigravity 2.0.***
+适用版本：Antigravity  最新版本，会及时更新
 
 ## 📦 目录结构
 
